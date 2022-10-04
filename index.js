@@ -2,7 +2,7 @@
     const data = await (await fetch('https://cdn.freecodecamp.org/testable-projects-fcc/data/tree_map/video-game-sales-data.json')).json();
     const title = document.querySelector('#title');
     title.textContent = data.name;
-    let platformNames = []
+    let platformNames = [];
     data.children.forEach(child => {
         if (!platformNames.includes(child.name)) {
             platformNames.push(child.name)
@@ -42,7 +42,8 @@
         .attr('height', d => d.y1 - d.y0)
         .style('stroke', "black")
         .style('fill', d => colorScale(d.parent.data.name))
+        .attr('class', 'tile')
     console.log(root.leaves())
     console.log(d3)
     console.log(data)
-})()
+})();
