@@ -43,6 +43,9 @@
         .style('stroke', "black")
         .style('fill', d => colorScale(d.parent.data.name))
         .attr('class', 'tile')
+        .attr('data-name', d => d.data.name)
+        .attr('data-category', d => d.data.category)
+        .attr('data-value', d => d.data.value);
     console.log(root.leaves())
     console.log(d3)
     console.log(data)
