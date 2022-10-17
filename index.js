@@ -14,8 +14,8 @@
         colors.push(`#${randomColor}`);
     }
     const margin = { top: 10, right: 10, bottom: 10, left: 10 };
-    const chartHeight = 1000;
-    const chartWidth = 1000;
+    const chartHeight = 900;
+    const chartWidth = 900;
     const innerHeight = chartHeight - margin.top - margin.bottom;
     const innerWidth = chartWidth - margin.left - margin.right;
     const chart = d3
@@ -26,10 +26,12 @@
     const root = d3.hierarchy(data).sum(d => d.value);
     d3.treemap().size([innerWidth, innerHeight])(root);
 
-    const colorScale = d3.scaleOrdinal().domain(platformNames).range(colors)
-    chart.selectAll('rect')
+    const colorScale = d3.scaleOrdinal().domain(platformNames).range(colors);
+    chart
+        .selectAll('rect')
         .data(root.leaves())
-        .enter().append('rect')
+        .enter()
+        .append('rect')
         .attr('x', (d) => {
             return d.x0
         }
@@ -46,6 +48,19 @@
         .attr('data-name', d => d.data.name)
         .attr('data-category', d => d.data.category)
         .attr('data-value', d => d.data.value);
+    // Add Text Labels
+    chart
+        .selectAll('text')
+        .data(root.leaves())
+        .enter()
+        .append('text')
+        .attr('x', (d) => d.x0 + 2)
+        .attr('y', d => d.y0 + 10)
+        .text(d => {
+            return d.data.name
+        })
+        .attr('font-size', '10px')
+        .attr('word-break', 'break-all')
     console.log(root.leaves())
     console.log(d3)
     console.log(data)
