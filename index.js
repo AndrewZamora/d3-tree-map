@@ -54,13 +54,16 @@
         .data(root.leaves())
         .enter()
         .append('text')
+        .each(function(d){
+            const text = d3.select(this);
+           const name = d.data.name.split(' ');
+           name.forEach(item => {
+            text.append('tspan').text(()=> item)
+           })
+        })
         .attr('x', (d) => d.x0 + 2)
         .attr('y', d => d.y0 + 10)
-        .text(d => {
-            return d.data.name
-        })
         .attr('font-size', '10px')
-        .attr('word-break', 'break-all')
     console.log(root.leaves())
     console.log(d3)
     console.log(data)
