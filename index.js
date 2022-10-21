@@ -54,12 +54,29 @@
         .data(root.leaves())
         .enter()
         .append('text')
-        .each(function(d){
+        .each(function (d) {
             const text = d3.select(this);
-           const name = d.data.name.split(' ');
-           name.forEach(item => {
-            text.append('tspan').text(()=> item)
-           })
+            const name = d.data.name
+            const textFontSize = 1;
+            const words = d.data.name.split(/\s+/);
+            let yOffset = 10;
+            console.log(name,name.length, (d.x1 - d.x0))
+            if ((name.length * 6) < (d.x1 - d.x0)) {
+                text.append('tspan')
+                    .text(() => name)
+                    .attr('y', d.y0 + 10)
+                    .attr('x', d.x0 )
+                return
+            }
+
+            words.forEach(item => {
+                text.append('tspan')
+                    .text(() => item)
+                    .attr('y', d.y0 + yOffset)
+                    .attr('x', d.x0)
+                yOffset += 10
+
+            })
         })
         .attr('x', (d) => d.x0 + 2)
         .attr('y', d => d.y0 + 10)
