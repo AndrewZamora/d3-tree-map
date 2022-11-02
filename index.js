@@ -31,7 +31,13 @@
         .select("#chart-container")
         .append("div")
         .attr("id", "tooltip")
-        .style("visibility", "hidden");
+        .style("visibility", "hidden")
+        .style("position", "absolute")
+        .style("font-size", "12px")
+        .style("background", "#333")
+        .style("color", "#FFF")
+        .style("border-radius", "4px")
+        .style("padding", "10px");
     chart
         .selectAll('rect')
         .data(root.leaves())
@@ -54,7 +60,12 @@
         .attr('data-category', d => d.data.category)
         .attr('data-value', d => d.data.value)
         .on('mouseover', function (d) {
-            console.log(d)
+            const tooltipText = d.data.name;
+            tooltip
+                .style("left", `${d.x1}px`)
+                .style("top", `${d.y0}px`)
+                .style("visibility", "visible")
+                .html(tooltipText);
         })
     // Add Text Labels
     chart
