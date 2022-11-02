@@ -27,6 +27,11 @@
     d3.treemap().size([innerWidth, innerHeight])(root);
 
     const colorScale = d3.scaleOrdinal().domain(platformNames).range(colors);
+    const tooltip = d3
+        .select("#chart-container")
+        .append("div")
+        .attr("id", "tooltip")
+        .style("visibility", "hidden");
     chart
         .selectAll('rect')
         .data(root.leaves())
@@ -47,7 +52,10 @@
         .attr('class', 'tile')
         .attr('data-name', d => d.data.name)
         .attr('data-category', d => d.data.category)
-        .attr('data-value', d => d.data.value);
+        .attr('data-value', d => d.data.value)
+        .on('mouseover', function (d) {
+            console.log(d)
+        })
     // Add Text Labels
     chart
         .selectAll('text')
@@ -60,12 +68,12 @@
             const textFontSize = 1;
             const words = d.data.name.split(/\s+/);
             let yOffset = 10;
-            console.log(name,name.length, (d.x1 - d.x0))
+            console.log(name, name.length, (d.x1 - d.x0))
             if ((name.length * 6) < (d.x1 - d.x0)) {
                 text.append('tspan')
                     .text(() => name)
                     .attr('y', d.y0 + 10)
-                    .attr('x', d.x0 )
+                    .attr('x', d.x0)
                 return
             }
 
