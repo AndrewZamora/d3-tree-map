@@ -49,7 +49,6 @@
         )
         .attr('y', d => d.y0)
         .attr('width', d => {
-            console.log(d)
             return d.x1 - d.x0
         })
         .attr('height', d => d.y1 - d.y0)
@@ -59,14 +58,17 @@
         .attr('data-name', d => d.data.name)
         .attr('data-category', d => d.data.category)
         .attr('data-value', d => d.data.value)
-        .on('mouseover', function (d) {
+        .on('mouseover', d => {
             const tooltipText = d.data.name;
+            const { pageX, pageY } = d3.event;
             tooltip
-                .style("left", `${d.x1}px`)
-                .style("top", `${d.y0}px`)
+                .attr('data-value', () => d.data.value)
+                .style("left", `${pageX}px`)
+                .style("top", `${pageY}px`)
                 .style("visibility", "visible")
                 .html(tooltipText);
         })
+        .on('mouseout', () => tooltip.style("visibility", "hidden"));
     // Add Text Labels
     chart
         .selectAll('text')
