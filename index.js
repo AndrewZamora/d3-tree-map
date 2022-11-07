@@ -23,6 +23,17 @@
         .append("svg")
         .attr("height", chartHeight)
         .attr("width", chartWidth);
+    const legend = d3
+        .select("#chart-container")
+        .append('svg')
+        .attr("id", "legend")
+        .attr("height", "50px")
+        .attr("width", "100%");
+    data.children.forEach(child => {
+        legend
+            .append('rect')
+            .attr("class", "legend-item")
+    });
     const root = d3.hierarchy(data).sum(d => d.value);
     d3.treemap().size([innerWidth, innerHeight])(root);
 
@@ -104,5 +115,5 @@
         .attr('font-size', '10px')
     console.log(root.leaves())
     console.log(d3)
-    console.log(data)
+    console.log({ data })
 })();
