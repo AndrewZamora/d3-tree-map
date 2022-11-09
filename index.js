@@ -29,10 +29,40 @@
         .attr("id", "legend")
         .attr("height", "50px")
         .attr("width", "100%");
-    data.children.forEach(child => {
+    let position = {
+        index: 0,
+        row: 0
+    };
+    data.children.forEach((child, index) => {
+        const xOffset = 60;
+        const yOffset = 25;
         legend
             .append('rect')
             .attr("class", "legend-item")
+            .attr('fill', 'green')
+            .attr('height', '20px')
+            .attr('width', '20px')
+            .attr('x', () => {
+                return `${position.index * xOffset}`
+            })
+            .attr('y', () => {
+                if(position.row) {
+                    return yOffset * position.row
+                }
+                return '0'
+            })
+
+        if ((position.index + 1) > data.children.length / 2) {
+            position.index = 0;
+            position.row += 1;
+        } else {
+            position.index += 1;
+        }
+        legend
+            .append('text')
+            .text(() => child.name)
+            .attr('x', `${(index * xOffset) + 20}`)
+            .attr('y', '20')
     });
     const root = d3.hierarchy(data).sum(d => d.value);
     d3.treemap().size([innerWidth, innerHeight])(root);
