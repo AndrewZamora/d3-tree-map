@@ -51,18 +51,23 @@
                 }
                 return '0'
             })
+        legend
+            .append('text')
+            .text(() => child.name)
+            .attr('x', `${(position.index* xOffset) + 20}`)
+            .attr('y', ()=> {
+                if(position.row) {
+                    return (yOffset * position.row) + 20
+                }
+                return '20'
+            });
 
-        if ((position.index + 1) > data.children.length / 2) {
+        if ((position.index + 1) >= data.children.length / 2) {
             position.index = 0;
             position.row += 1;
         } else {
             position.index += 1;
         }
-        legend
-            .append('text')
-            .text(() => child.name)
-            .attr('x', `${(index * xOffset) + 20}`)
-            .attr('y', '20')
     });
     const root = d3.hierarchy(data).sum(d => d.value);
     d3.treemap().size([innerWidth, innerHeight])(root);
