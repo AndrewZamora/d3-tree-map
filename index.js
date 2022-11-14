@@ -13,6 +13,7 @@
         const randomColor = Math.floor(Math.random() * 16777215).toString(16);
         colors.push(`#${randomColor}`);
     }
+    const colorScale = d3.scaleOrdinal().domain(platformNames).range(colors);
     const margin = { top: 10, right: 10, bottom: 10, left: 10 };
     const chartHeight = 900;
     const chartWidth = 900;
@@ -39,7 +40,9 @@
         legend
             .append('rect')
             .attr("class", "legend-item")
-            .attr('fill', 'green')
+            .attr('fill', ()=>{
+                return colorScale(child.name)
+            })
             .attr('height', '20px')
             .attr('width', '20px')
             .attr('x', () => {
@@ -72,7 +75,6 @@
     const root = d3.hierarchy(data).sum(d => d.value);
     d3.treemap().size([innerWidth, innerHeight])(root);
 
-    const colorScale = d3.scaleOrdinal().domain(platformNames).range(colors);
     const tooltip = d3
         .select("#chart-container")
         .append("div")
