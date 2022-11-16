@@ -9,3 +9,8 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+#tooltip {
+    display: flex;
+    flex-direction: column;
+}

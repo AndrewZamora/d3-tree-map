@@ -35,7 +35,7 @@
         row: 0
     };
     data.children.forEach((child, index) => {
-        const xOffset = 60;
+        const xOffset = 65;
         const yOffset = 25;
         legend
             .append('rect')
@@ -57,7 +57,7 @@
         legend
             .append('text')
             .text(() => child.name)
-            .attr('x', `${(position.index* xOffset) + 20}`)
+            .attr('x', `${(position.index * xOffset) + 22}`)
             .attr('y', ()=> {
                 if(position.row) {
                     return (yOffset * position.row) + 20
@@ -107,7 +107,7 @@
         .attr('data-category', d => d.data.category)
         .attr('data-value', d => d.data.value)
         .on('mouseover', d => {
-            const tooltipText = d.data.name;
+            const tooltipText = `<span>Name: ${d.data.name} </span><span>Category: ${d.data.category}</span><span>Value: ${d.data.value}</span>`;
             const { pageX, pageY } = d3.event;
             tooltip
                 .attr('data-value', () => d.data.value)
