@@ -13,8 +13,9 @@
   });
   let colors = [];
   for (let index = 0; index < 18; index++) {
-    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-    colors.push(`#${randomColor}`);
+    // https://stackoverflow.com/questions/43193341/how-to-generate-random-pastel-or-brighter-color-in-javascript
+    const color = `hsl(${360 * Math.random()}, ${ 50 + 70 * Math.random() }%, ${ 85 + 10 * Math.random()}%)`
+    colors.push(color);
   }
   const colorScale = d3.scaleOrdinal().domain(platformNames).range(colors);
   // Set up graph container
@@ -117,7 +118,6 @@
       const name = d.data.name;
       const words = d.data.name.split(/\s+/);
       let yOffset = 10;
-      console.log(name, name.length, d.x1 - d.x0);
       if (name.length * 6 < d.x1 - d.x0) {
         text
           .append("tspan")
